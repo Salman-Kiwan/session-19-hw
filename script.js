@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const startBtn = document.getElementById("start-btn");
   const playerName = document.getElementById("player-name");
   const playerLevel = document.getElementById("player-level");
+  const highScore = document.getElementById("high-score");
 
   // Buttons
   const green = document.getElementById("green");
@@ -19,6 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const blueSound = document.getElementById("blue-sound");
   const wrongSound = document.getElementById("wrong-sound"); // always ready for mistakes
   const correctSound = document.getElementById("correct-sound");
+  const backgroundMusic = document.getElementById("game-sound");
 
   const colorBtns = {
     green: { btn: green, sound: greenSound },
@@ -32,6 +34,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let userMoves = []; // player moves
   let level = 1; // deffault level
   let playing = false; // flag
+  let highScoreValue = 0;
 
   // Players name
   const name = prompt("What is your name?");
@@ -88,6 +91,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // wrong click
     if (userMoves[idx] !== compMoves[idx]) {
+      backgroundMusic.loop = false;
+      backgroundMusic.pause();
+      backgroundMusic.currentTime = 0;
       wrongSound.currentTime = 0;
       wrongSound.play();
       alert("Oops! Wrong! You reached level " + level);
@@ -109,23 +115,39 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // reset game
   function resetGame() {
+    highScoreValue =
+      highScore > level
+        ? (highScore.textContent = highScore)
+        : (highScore.textContent = level);
     level = 1;
     compMoves = [];
     userMoves = [];
     playing = false;
     startBtn.textContent = "Start! ";
     playerLevel.textContent = level;
+
+    stopDots();
   }
 
   // Start button
   startBtn.addEventListener("click", () => {
     if (playing) return; // !extra clicks
+
+    // Start audoi
+    correctSound.currentTime = 0;
+    correctSound.play();
+
+    // game audio
+    backgroundMusic.loop = true;
+    backgroundMusic.play();
+
+    // defualt
     playing = true;
     level = 1;
     compMoves = [];
     userMoves = [];
     playerLevel.textContent = level;
-    startBtn.textContent = "...";
+    animateDots();
     nextLevel(); // start first level
   });
 
@@ -136,4 +158,18 @@ document.addEventListener("DOMContentLoaded", () => {
       checkMove(color);
     });
   });
+  let dots = 1;
+  let dotsInterval;
+
+  function animateDots() {
+    dotsInterval = setInterval(() => {
+      dots = dots % 3;
+      dots++;
+      startBtn.textContent = ".".repeat(dots);
+    }, 500);
+  }
+  function stopDots() {
+    clearInterval(dotsInterval);
+    startBtn.textContent = "Start!";
+  }
 });

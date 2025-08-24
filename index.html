@@ -87,8 +87,11 @@
 
         <div class="absolute right-5 top-5 text-right text-start">
           <p id="player-name" class="text-green-500 text-lg mb-2">Name</p>
-          <p class="text-green-500 text-lg">
+          <p class="text-green-500 text-lg mb-2">
             Lvl: <span id="player-level">1</span>
+          </p>
+          <p class="text-green-500 text-lg mb-2">
+            High Score: <span id="high-score">0</span>
           </p>
         </div>
 
@@ -130,7 +133,7 @@
     <audio id="yellow-sound" src="audios/yellow.mp3"></audio>
     <audio id="wrong-sound" src="audios/wrong.mp3"></audio>
     <audio id="correct-sound" src="audios\correct.mp3"></audio>
-
+    <audio id="game-sound" src="audios\mixkit-game-level-music-689.wav"></audio>
     <script>
       // Buttons
       const green = document.getElementById("green");
