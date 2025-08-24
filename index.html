@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Memory Game</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              arcade: ["'Press Start 2P'", "cursive"],
+            },
+            colors: {
+              primary: "#1DA1F2",
+              secondary: "#14171A",
+            },
+            // Moved the custom styles here for optimization
+            perspective: {
+              500: "500px",
+            },
+            textShadow: {
+              default: "0 2px 10px rgba(0, 0, 0, 0.3)",
+              hover: "0 5px 15px rgba(0, 0, 0, 0.4)",
+            },
+          },
+        },
+        // Adding custom components through the config
+        plugins: [
+          function ({ addComponents }) {
+            addComponents({
+              ".btn-container": {
+                perspective: "500px",
+              },
+              "#start-btn": {
+                textShadow: "0 2px 10px rgba(0, 0, 0, 0.3)",
+                position: "relative",
+                transition: "all 0.3s ease",
+                transformStyle: "preserve-3d",
+              },
+              "#start-btn::after": {
+                content: '""',
+                position: "absolute",
+                bottom: "-8px",
+                left: "10%",
+                width: "80%",
+                height: "8px",
+                background:
+                  "radial-gradient(ellipse at center, rgba(0, 0, 0, 0.35) 0%, transparent 80%)",
+                filter: "blur(2px)",
+                transition: "all 0.3s ease",
+                zIndex: "-1",
+              },
+              "#start-btn:hover": {
+                transform: "translateY(-5px) rotateX(15deg)",
+                textShadow: "0 5px 15px rgba(0, 0, 0, 0.4)",
+              },
+              "#start-btn:hover::after": {
+                opacity: "0.6",
+                bottom: "-12px",
+                width: "90%",
+              },
+            });
+          },
+        ],
+      };
+    </script>
+  </head>
+  <body class="font-arcade bg-black">
+    <div class="bg-black h-screen flex">
+      <div
+        class="flex flex-col relative bg-neutral-800 h-[90vh] my-auto w-full justify-center items-center gap-12 p-6"
+      >
+        <div class="btn-container mb-12">
+          <h1
+            id="start-btn"
+            class="text-white text-5xl md:text-6xl tracking-wider cursor-pointer transition-all duration-300 hover:text-green-400 font-bold"
+          >
+            Start!
+          </h1>
+        </div>
+
+        <div class="absolute right-5 top-5 text-right text-start">
+          <p id="player-name" class="text-green-500 text-lg mb-2">Name</p>
+          <p class="text-green-500 text-lg">
+            Lvl: <span id="player-level">1</span>
+          </p>
+        </div>
+
+        <div
+          class="max-w-[400px] w-full bg-white grid grid-cols-2 gap-10 p-10 rounded-3xl text-xs box-border"
+        >
+          <div
+            class="flex bg-green-300 h-32 rounded-2xl justify-center items-center font-bold text-white border-2 border-neutral-900 hover:cursor-pointer active:scale-[0.87] active:ring-4 ring-red-500 active:border-0"
+            id="green"
+          >
+            Green 0
+          </div>
+          <div
+            class="flex bg-red-300 h-32 rounded-2xl justify-center items-center font-bold text-white border-2 border-neutral-900 hover:cursor-pointer active:scale-[0.87] active:ring-4 ring-red-500 active:border-0"
+            id="red"
+          >
+            Red 1
+          </div>
+          <div
+            class="flex bg-yellow-300 h-32 rounded-2xl justify-center items-center font-bold text-white border-2 border-neutral-900 hover:cursor-pointer active:scale-[0.87] active:ring-4 ring-red-500 active:border-0"
+            id="yellow"
+          >
+            Yellow 2
+          </div>
+          <div
+            class="flex bg-blue-300 h-32 rounded-2xl justify-center items-center font-bold text-white border-2 border-neutral-900 hover:cursor-pointer active:scale-[0.87] active:ring-4 ring-red-500 active:border-0"
+            id="blue"
+          >
+            Blue 3
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Audio elements -->
+    <audio id="blue-sound" src="audios/blue.mp3"></audio>
+    <audio id="green-sound" src="audios/green.mp3"></audio>
+    <audio id="red-sound" src="audios/red.mp3"></audio>
+    <audio id="yellow-sound" src="audios/yellow.mp3"></audio>
+    <audio id="wrong-sound" src="audios/wrong.mp3"></audio>
+    <audio id="correct-sound" src="audios\correct.mp3"></audio>
+
+    <script>
+      // Buttons
+      const green = document.getElementById("green");
+      const red = document.getElementById("red");
+      const yellow = document.getElementById("yellow");
+      const blue = document.getElementById("blue");
+
+      // Audio
+      const greenSound = document.getElementById("green-sound");
+      const redSound = document.getElementById("red-sound");
+      const yellowSound = document.getElementById("yellow-sound");
+      const blueSound = document.getElementById("blue-sound");
+      const wrongSound = document.getElementById("wrong-sound");
+      const correctSound = document.getElementById("correct-sound");
+
+      // Sound Implementation
+      green.addEventListener("click", () => {
+        greenSound.currentTime = 0;
+        greenSound.play();
+      });
+
+      red.addEventListener("click", () => {
+        redSound.currentTime = 0;
+        redSound.play();
+      });
+
+      yellow.addEventListener("click", () => {
+        yellowSound.currentTime = 0;
+        yellowSound.play();
+      });
+
+      blue.addEventListener("click", () => {
+        blueSound.currentTime = 0;
+        blueSound.play();
+      });
+    </script>
+    <script src="script.js"></script>
+  </body>
+</html>
