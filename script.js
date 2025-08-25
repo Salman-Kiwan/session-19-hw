@@ -39,7 +39,8 @@ document.addEventListener("DOMContentLoaded", () => {
   // Players name
   const name = prompt("What is your name?");
   if (name) {
-    playerName.textContent = name[0].toUpperCase() + name.slice(1);
+    playerName.textContent =
+      name[0].toUpperCase() + name.slice(1).toLocaleLowerCase();
   } else {
     playerName.textContent = "Player"; // default if empty
   }
